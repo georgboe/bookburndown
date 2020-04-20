@@ -50,7 +50,7 @@ export default {
         return
       }
       let first = parseISO(this.activities[0].date)
-      let points = this.activities.map((x, index) => new Point(differenceInDays(parseISO(x.date), first), 100 - x.value))
+      let points = this.activities.map(x => new Point(differenceInDays(parseISO(x.date), first), 100 - x.value))
       let lastRealXValue = points[points.length - 1].x
       let trendLineValues = LinearRegression.linearRegressionLSE(points)
       let allData = points.concat(trendLineValues)

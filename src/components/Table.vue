@@ -101,7 +101,7 @@ export default {
       }
   },
   computed: {
-      maxDate () {
+      maxDate () {
           if (this.activities.length === 0) {
               return '25'
           }
