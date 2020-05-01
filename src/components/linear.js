@@ -1,10 +1,12 @@
+import minBy from "lodash/minBy"
+
 class LinearRegression {
 
     static linearRegressionLSE(series) {
 
         let q = series.length
 
-        if (q === 0) {
+        if (q === 0 || minBy(series, 'y').y <= 0) {
             return []
         }
 
@@ -59,8 +61,8 @@ class LinearRegression {
         let counter = 0
         while(val >= 0) {
             val += m
-            if (val >= 0) {
-                r.push(new Point(pointDay, val))
+            if (val < 0) {
+                r.push(new Point(pointDay, Math.max(val, 0)))
             }
             pointDay++
             counter++

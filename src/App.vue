@@ -3,8 +3,8 @@
     <div class="container w-full md:max-w-3xl mx-auto py-10">
       <div class="w-full px-4 md:px-6 text-gray-800 leading-normal">
         <Table :activities="activities" v-on:addActivity="addActivity" v-on:removeActivity="removeActivity" />
-        <CompletionDate :class="{hidden: !shouldCalculate}" :date="completionDate"/>
-        <Chart :class="{hidden: !shouldCalculate}" :chartData="chartData" :lastRealValue="lastRealValue" />
+        <CompletionDate :class="{hidden: !showCompletionDate}" :date="completionDate"/>
+        <Chart :class="{hidden: !showChart}" :chartData="chartData" :lastRealValue="lastRealValue" />
       </div>
     </div>
   </div>
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     calculate () {
-      if (!this.shouldCalculate) {
+      if (!this.showChart) {
         return
       }
       let first = parseISO(this.activities[0].date)
@@ -54,10 +54,15 @@ export default {
       let lastRealXValue = points[points.length - 1].x
       let trendLineValues = LinearRegression.linearRegressionLSE(points)
       let allData = points.concat(trendLineValues)
-      this.lastRealValue = addDays(first, lastRealXValue).getTime()
-      let daysToCompletion = trendLineValues[trendLineValues.length - 1].x
-      this.completionDate = addDays(first, daysToCompletion)
       first = addMinutes(first, -first.getTimezoneOffset())
+      this.lastRealValue = addDays(first, lastRealXValue).getTime()
+      if (trendLineValues.length > 0) {
+        let daysToCompletion = trendLineValues[trendLineValues.length - 1].x
+        this.completionDate = addDays(first, daysToCompletion)
+      } else {
+        this.completionDate = null
+      }
+      
       for (const point of allData) {
         point.x = addDays(first, point.x).getTime()
       }
@@ -83,8 +88,11 @@ export default {
     }
   },
   computed: {
-    shouldCalculate() {
+    showChart() {
       return this.activities.length >= 2
+    },
+    showCompletionDate () {
+      return this.completionDate != null
     }
   }
 }
