@@ -59,11 +59,10 @@ class LinearRegression {
         let val = startValue
         let pointDay = series[series.length - 1].x + 1
         let counter = 0
-        while(val >= 0) {
+        while(val > 0) {
             val += m
-            if (val < 0) {
-                r.push(new Point(pointDay, Math.max(val, 0)))
-            }
+            console.log(val)
+            r.push(new Point(pointDay, Math.max(val, 0)))
             pointDay++
             counter++
             if (counter > 1000) {
