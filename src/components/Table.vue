@@ -78,6 +78,8 @@
 </template>
 <script>
 import formatISO from 'date-fns/formatISO'
+import parseISO from 'date-fns/parseISO'
+import addDays from 'date-fns/addDays'
 export default {
   name: 'Table',
   props: [
@@ -85,11 +87,16 @@ export default {
   ],
   data () {
       return {
-          date: formatISO(new Date(), { representation: 'date' }),
+          date: formatISO(this.suggestedDate(), { representation: 'date' }),
           percent: null
       }
   },
   mounted () {
+  },
+  watch: {
+    activities (val) {
+      this.date = formatISO(this.suggestedDate(), { representation: 'date' })
+    }
   },
   methods: {
       addActivity () {
@@ -98,6 +105,15 @@ export default {
       },
       removeActivity(activity) {
           this.$emit("removeActivity", activity.date)
+      },
+      suggestedDate () {
+        if (this.activities.length === 0) {
+          return new Date()
+        }
+
+        let d = parseISO(this.activities[this.activities.length - 1].date)
+
+        return addDays(d, 1)
       }
   },
   computed: {
