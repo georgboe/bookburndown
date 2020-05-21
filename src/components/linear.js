@@ -61,7 +61,6 @@ class LinearRegression {
         let counter = 0
         while(val > 0) {
             val += m
-            console.log(val)
             r.push(new Point(pointDay, Math.max(val, 0)))
             pointDay++
             counter++

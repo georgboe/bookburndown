@@ -94,7 +94,7 @@ export default {
   mounted () {
   },
   watch: {
-    activities (val) {
+    activities () {
       this.date = formatISO(this.suggestedDate(), { representation: 'date' })
     }
   },

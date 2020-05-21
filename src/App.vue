@@ -4,7 +4,7 @@
       <div class="w-full px-4 md:px-6 text-gray-800 leading-normal">
         <Table :activities="activities" v-on:addActivity="addActivity" v-on:removeActivity="removeActivity" />
         <CompletionDate :class="{hidden: !showCompletionDate}" :date="completionDate"/>
-        <Chart :class="{hidden: !showChart}" :chartData="chartData" :lastRealValue="lastRealValue" />
+        <Chart :class="{hidden: !showChart}" :chartData="chartData" :lastRealValue="lastRealValue" :range="range" />
       </div>
     </div>
   </div>
@@ -16,6 +16,7 @@ import Chart from './components/Chart'
 import CompletionDate from './components/CompletionDate'
 
 import {LinearRegression, Point} from './components/linear'
+import StandardDeviation from './components/stddev'
 import parseISO from 'date-fns/parseISO'
 import differenceInDays from 'date-fns/differenceInDays'
 import addDays from 'date-fns/addDays'
@@ -37,6 +38,7 @@ export default {
         activities: [],
         lastRealValue: null,
         chartData: null,
+        range: null,
         completionDate: null
     }
   },
@@ -53,6 +55,9 @@ export default {
       let points = this.activities.map(x => new Point(differenceInDays(parseISO(x.date), first), 100 - x.value))
       let lastRealXValue = points[points.length - 1].x
       let trendLineValues = LinearRegression.linearRegressionLSE(points)
+
+      let stddev = StandardDeviation.stddev(points)
+      let range = trendLineValues.map((x, i) => [x.x, Math.max(x.y - (stddev * (i + 1)), 0), Math.min(points[points.length - 1].y, x.y + (stddev * (i + 1))) ])
       let allData = points.concat(trendLineValues)
       first = addMinutes(first, -first.getTimezoneOffset())
       this.lastRealValue = addDays(first, lastRealXValue).getTime()
@@ -66,7 +71,11 @@ export default {
       for (const point of allData) {
         point.x = addDays(first, point.x).getTime()
       }
+      for (const arr of range) {
+        arr[0] = addDays(first, arr[0]).getTime()
+      }
       this.chartData = allData
+      this.range = range
     },
     addActivity(val) {
       this.activities.push(val)

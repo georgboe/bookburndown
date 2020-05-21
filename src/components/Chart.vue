@@ -3,10 +3,15 @@
 </template>
 <script>
 import Highcharts from "highcharts";
+import HighchartsMore from 'highcharts/highcharts-more'
+
+HighchartsMore(Highcharts)
+
+
 
 export default {
   name: "Chart",
-  props: ["chartData", "lastRealValue"],
+  props: ["chartData", "range", "lastRealValue",],
   watch: {
     chartData(val) {
       Highcharts.chart(this.$refs.chart, {
@@ -57,6 +62,18 @@ export default {
                 dashStyle: "dot"
               }
             ]
+          }, {
+            name: 'Range',
+            data: this.range,
+            type: 'arearange',
+            lineWidth: 0,
+            linkedTo: ':previous',
+            color: "#252f3f",
+            fillOpacity: 0.2,
+            zIndex: 0,
+            marker: {
+                enabled: false
+            }
           }
         ],
         credits: {
