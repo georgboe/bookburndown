@@ -1,6 +1,10 @@
-# bookburndown
+# Book Burndown
 
-* https://dracoblue.net/dev/linear-least-squares-in-javascript/
+Single page application to track your reading progress and predict your completion date. All data is stored on the client in `localStorage`.
+
+![screenshot](public/burndown.png)
+
+Linear regression code is stolen from https://dracoblue.net/dev/linear-least-squares-in-javascript/
 
 ## Project setup
 ```
@@ -17,12 +21,7 @@ yarn run serve
 yarn run build
 ```
 
-### Run your tests
+### Run tests
 ```
 yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
 ```
