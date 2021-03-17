@@ -4,7 +4,8 @@ module.exports = {
   },
   variants: {},
   plugins: [
-    require('@tailwindcss/ui')
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography')
   ],
   important: true,
 }

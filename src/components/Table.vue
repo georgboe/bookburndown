@@ -44,7 +44,7 @@
                   <input
                     v-model="date"
                     type="date"
-                    class="form-input block w-full text-xs lg:text-xs sm:leading-5"
+                    class="shadow-sm focus:ring-gray-500 focus:border-gray-500 block w-full sm:text-sm border-gray-300 rounded-md"
                     placeholder="2020-01-01"
                   />
                 </div>
@@ -52,9 +52,10 @@
               <td class="px-4 py-2 whitespace-no-wrap border-b border-gray-200">
                 <div class="mt-1 relative rounded-md shadow-sm">
                   <input
+                    type="text"
                     v-model="percent"
                     pattern="[0-9]*"
-                    class="form-input block w-full text-xs lg:text-xs sm:leading-5"
+                    class="shadow-sm focus:ring-gray-500 focus:border-gray-500 block w-full sm:text-sm border-gray-300 rounded-md"
                     :placeholder="maxDate"
                     v-on:keyup.enter="addActivity"
                   />
@@ -65,7 +66,7 @@
                   <button
                     type="submit"
                     @click="addActivity"
-                    class="group relative w-full flex justify-center py-1 px-3 border border-transparent text-xs sm:text-sm leading-5 font-medium rounded-md text-white bg-gray-600 hover:bg-gray-500 focus:outline-none focus:border-gray-700 focus:shadow-outline-indigo active:bg-gray-700 transition duration-150 ease-in-out"
+                    class="group relative w-full flex justify-center py-1 px-3 border border-transparent text-xs sm:text-sm leading-5 font-medium rounded-md text-white bg-gray-600 hover:bg-gray-500 focus:outline-none focus:border-gray-700 focus:shadow-outline-gray active:bg-gray-700 transition duration-150 ease-in-out"
                   >Add</button>
                 </div>
               </td>

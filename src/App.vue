@@ -53,14 +53,18 @@ export default {
       }
       let first = parseISO(this.activities[0].date)
       let points = this.activities.map(x => new Point(differenceInDays(parseISO(x.date), first), 100 - x.value))
-      let lastRealXValue = points[points.length - 1].x
+      const lrv = points[points.length - 1]
+      let lastRealXValue = lrv.x
       let trendLineValues = LinearRegression.linearRegressionLSE(points)
 
       let stddev = StandardDeviation.stddev(points)
       let range = trendLineValues.map((x, i) => [x.x, Math.max(x.y - (stddev * (i + 1)), 0), Math.min(points[points.length - 1].y, x.y + (stddev * (i + 1))) ])
+      console.log(range)
       let allData = points.concat(trendLineValues)
       first = addMinutes(first, -first.getTimezoneOffset())
       this.lastRealValue = addDays(first, lastRealXValue).getTime()
+      range.unshift([lrv.x, lrv.y, lrv.y])
+      console.log(this.lastRealValue)
       if (trendLineValues.length > 0) {
         let daysToCompletion = trendLineValues[trendLineValues.length - 1].x
         this.completionDate = addDays(first, daysToCompletion)
