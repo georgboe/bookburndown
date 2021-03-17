@@ -48,6 +48,7 @@ export default {
       
       this.chartData = calculationResult.allData
       this.range = calculationResult.range
+      this.completionDate = calculationResult.completionDate
     },
     addActivity(val) {
       this.activities.push(val)
