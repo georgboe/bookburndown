@@ -28,6 +28,13 @@ export default {
         legend: {
           enabled: false
         },
+        tooltip: {
+          valueDecimals: 0,
+          split: false,
+          shared: true,
+          useHTML: true,
+          headerFormat: '<span style="font-size:10px">{point.x:%e. %b}</span><br />',
+        },
         xAxis: {
           type: "datetime",
           dateTimeLabelFormats: {
@@ -61,7 +68,10 @@ export default {
               {
                 dashStyle: "dot"
               }
-            ]
+            ],
+            tooltip: {
+              pointFormat: '<strong class="text-lg">{point.y} % left</strong><br/>'
+            }
           }, {
             name: 'Range',
             data: this.range,
@@ -73,6 +83,9 @@ export default {
             zIndex: 0,
             marker: {
                 enabled: false
+            },
+            tooltip: {
+              pointFormat: '<span style="font-size: 10px">({point.low}% - {point.high}%)</span>'
             }
           }
         ],
