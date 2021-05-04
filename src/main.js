@@ -1,8 +1,8 @@
 import Vue from 'vue'
-import {Vue2Storage} from 'vue2-storage'
+import { Plugin } from 'vue2-storage';
 import App from './App.vue'
 
-Vue.use(Vue2Storage, {
+Vue.use(Plugin, {
   prefix: 'app_',
   driver: 'local',
   ttl: 0
