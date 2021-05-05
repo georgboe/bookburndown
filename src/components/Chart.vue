@@ -85,7 +85,12 @@ export default {
                 enabled: false
             },
             tooltip: {
-              pointFormat: '<span style="font-size: 10px">({point.low}% - {point.high}%)</span>'
+              pointFormatter () {
+                if (Math.round(this.low) == Math.round(this.high)) {
+                  return null;
+                }
+                return `<span style="font-size: 10px">(${Math.round(this.low)}% - ${Math.round(this.high)}%)</span>`
+              }
             }
           }
         ],
