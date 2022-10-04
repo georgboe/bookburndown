@@ -3,8 +3,8 @@
     <div class="container w-full md:max-w-3xl mx-auto py-10">
       <div class="w-full px-4 md:px-6 text-gray-800 leading-normal">
         <Table :activities="activities" v-on:addActivity="addActivity" v-on:removeActivity="removeActivity" />
-        <CompletionDate :class="{hidden: !showCompletionDate}" :date="completionDate"/>
-        <Chart :class="{hidden: !showChart}" :chartData="chartData" :lastRealValue="lastRealValue" :range="range" />
+        <CompletionDate :class="{hidden: !showDetails}" :date="completionDate"/>
+        <Chart :class="{hidden: !showDetails}" :chartData="chartData" :lastRealValue="lastRealValue" :range="range" />
       </div>
     </div>
   </div>
@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     calculate () {
-      if (!this.showChart) {
+      if (!this.showDetails) {
         return
       }
       const calculationResult = ActivityService.calculate(this.activities)
@@ -70,11 +70,8 @@ export default {
     }
   },
   computed: {
-    showChart() {
+    showDetails() {
       return this.activities.length >= 2
-    },
-    showCompletionDate () {
-      return this.completionDate != null
     }
   }
 }
