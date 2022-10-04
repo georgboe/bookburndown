@@ -7,14 +7,23 @@ import HighchartsMore from 'highcharts/highcharts-more'
 
 HighchartsMore(Highcharts)
 
-
-
 export default {
   name: "Chart",
   props: ["chartData", "range", "lastRealValue",],
+  data: function() {
+    return {
+      chart: null
+    }
+  },
   watch: {
     chartData(val) {
-      Highcharts.chart(this.$refs.chart, {
+      if (this.chart !== null) {
+        this.chart.series[0].setData(val);
+        this.chart.series[1].setData(this.range);
+        this.chart.redraw();
+        return
+      }
+      this.chart = Highcharts.chart(this.$refs.chart, {
         colors: ["#252f3f"],
         title: {
           text: "Burndown"
